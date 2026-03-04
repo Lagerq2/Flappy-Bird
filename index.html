@@ -74,7 +74,8 @@
                 ctx.fillRect(pipe.x, pipe.top + gap, pipeWidth, canvas.height);
             });
         }
-
+        
+        //update pipes
         function updatePipes() {
             if (frame % 90 === 0) {
                 let topHeight = Math.random() * 300 + 50;
@@ -88,6 +89,7 @@
             });
         }
 
+        //check collisions
         function checkCollision() {
             for (let pipe of pipes) {
                 if (
