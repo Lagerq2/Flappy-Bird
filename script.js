@@ -6,7 +6,7 @@ let score = 0;
 let player = {
     x: 50,
     y: 250,
-    size: 30,
+    size: 15,
     velocity: 0,
     gravity: 0.5,
     jump: -8
