@@ -2,6 +2,8 @@ let gameStarted = false;
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let score = 0;
+let hasAskedForName = false;
+let hasShownButton = false;
 
 let player = {
     x: 50,
@@ -38,7 +40,7 @@ document.addEventListener("keydown", function(e) {
 document.addEventListener("touchstart", function(e) {
     e.preventDefault();
     startGame();
-});
+}, { passive: false });
 
 function drawPlayer() {
     ctx.fillStyle = "red";
@@ -93,14 +95,42 @@ function checkCollision() {
         }
 }
 
+document.getElementById("playAgainBtn").addEventListener("click", function() {
+            location.reload();
+        
+            document.getElementById("playAgainBtn").style.display = "none";
+            
+        });
+
+        
 
 function update() {
 
     if (gameOver) {
-
         ctx.fillStyle = "black";
         ctx.font = "40px Arial";
         ctx.fillText("Game Over", 100, 300);
+
+        if (!hasShownButton) {
+            document.getElementById("playAgainBtn").style.display = "block";
+            hasShownButton = true;
+        }
+
+        if (!hasAskedForName) {
+           let name = prompt("Enter your name:");
+
+           let scores  = JSON.parse(localStorage.getItem("scores")) || [];
+           if (!Array.isArray(scores)) scores = [];
+
+           scores.push({ 
+            name: name, 
+            score: score 
+        });
+          
+        localStorage.setItem("scores", JSON.stringify(scores));
+        
+        hasAskedForName = true;
+        }
         return;
     }
 
