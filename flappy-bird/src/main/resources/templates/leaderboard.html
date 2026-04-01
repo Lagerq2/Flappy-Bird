@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            text-align: center;
+        }
+
+        table {
+            margin: 50px auto;
+            border-collapse: collapse;
+            width: 400px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        h1 {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<h1>High Scores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody id="scoresTable">
+    <!-- Highscores fylls här via JS -->
+    </tbody>
+</table>
+
+<script>
+    fetch("/api/scores")
+        .then(res => res.json())
+        .then(highscores => {
+            const tbody = document.getElementById("scoresTable");
+            tbody.innerHTML = "";
+
+            highscores.forEach((hs, index) => {
+                const tr = document.createElement("tr");
+                const rankTd = document.createElement("td");
+                const nameTd = document.createElement("td");
+                const scoreTd = document.createElement("td");
+
+                rankTd.textContent = index + 1;
+                nameTd.textContent = hs.name || "Unknown"; // hantera null eller tomt namn
+                scoreTd.textContent = hs.score;
+
+                tr.appendChild(rankTd);
+                tr.appendChild(nameTd);
+                tr.appendChild(scoreTd);
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(err => console.error("Error fetching highscores:", err));
+</script>
+</body>
+</html>
