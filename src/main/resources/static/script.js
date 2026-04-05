@@ -112,16 +112,18 @@ function getHigScores() {
 }
 
 document.getElementById("playAgainBtn").addEventListener("click", function () {
-    location.reload();
     document.getElementById("playAgainBtn").style.display = "none";
+    location.reload();
+
 
 });
 
 document.getElementById("playAgainBtn").addEventListener("touchstart", function (e) {
     e.preventDefault();
+    document.getElementById("playAgainBtn").style.display = "none";
     location.reload();
 
-    document.getElementById("playAgainBtn").style.display = "none";
+
 })
 
 let lastTime = 0;
